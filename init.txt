@@ -1,0 +1,16 @@
+CTRLS
+
+0 5
+0 5 /
+
+MRATE
+0.5 /
+
+POPN
+20 /
+
+GENS
+10 /
+
+PARENTS
+4 /
