@@ -13,13 +13,18 @@ import sys, numpy as np, os, random
 
 # check sys.argv and assign defaultsif empty
 
-
+def getScriptPath():
+    return os.path.dirname(os.path.realpath(sys.argv[0]))
 # control variables
 controls = []
 params = {'POPN' : 40, 'PARENTS' : 15, 'MRATE' : 0.05, 'TOURN' : 0 }
 
+#extend file path
+initFile = getScriptPath() + '\\' + sys.argv[1]
+dumpFile = getScriptPath() + '\\' + sys.argv[2]
+outFile = getScriptPath() + '\\' + sys.argv[3]
 # initialize algorthm
-with open(sys.argv[1], "r") as f:
+with open(initFile, "r") as f:
 	searchlines = f.readlines()
 	f.close()
 for i, line in enumerate(searchlines):
@@ -105,25 +110,24 @@ else :
 	# introduce mutation
 	# [1] matrix with some deviations multiplied with nextPop
 	mutants = np.matrix([np.float(np.random.normal(1,0.3,1)) if random.random() < params['MRATE'] else 1 for x in range(nextPop.size)]).reshape(nextPop.shape)
-	print(mutants)	
 	nextPop = np.multiply(nextPop, mutants)
 	# find the fittest individual and store into output file
 	fittestInd = np.argmin(curData[:,-1])
-	fittest = [ "%.4f \t" % x for x in curData[fittestInd, :]]
+	fittest = [ "%.4f\t" % x for x in curData[fittestInd, :]]
 	fittest[-1] += '\n'
 	# check if output file exists or not
-	if not os.path.isfile(sys.argv[3]) :
+	if not os.path.isfile(outFile) :
 		# make header
 		header = ['CTRL'+ str(x) + '\t' for x in range(len(controls))]	
 		header.append('OBJ\n')
 		# write to file
-		with open(sys.argv[3], "a") as f:
+		with open(outFile, "a") as f:
 			f.writelines(header)
 			f.close()
 	# write fittest to file
-	with open(sys.argv[3], "a") as f:
+	with open(outFile, "a") as f:
 		f.writelines(fittest)
 		f.close()
-# write new population to a file
 
-np.savetxt(sys.argv[2], nextPop, fmt='%10.5f', newline="\n")
+# write new population to a file
+np.savetxt(dumpFile, nextPop, delimiter='\t', fmt='%10.5f', newline="\n")
