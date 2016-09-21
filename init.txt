@@ -7,10 +7,10 @@ MRATE
 0.5 /
 
 POPN
-20 /
+40 /
 
 GENS
 10 /
 
 PARENTS
-4 /
+15 /

@@ -9,6 +9,7 @@ Created on Mon Sep 19 11:14:00 2016
 import random, numpy as np, NeuralNet as NN
 
 params = [100, 0.05, 250, 3, 20]
+# population .. mutation rate .. generations .. dimof solutionvector .. parents
 
 curPop = np.random.choice(np.arange(-15,15,step=0.01),size=(params[0],params[3]),replace=False)
 
