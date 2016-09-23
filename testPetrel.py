@@ -5,9 +5,15 @@ Created on Tue Sep 20 17:24:17 2016
 @author: AKononov
 """
 
-import numpy as np, sys
+import numpy as np, sys, os
 
-curPop = np.loadtxt(sys.argv[1])
+def getScriptPath():
+    return os.path.dirname(os.path.realpath(sys.argv[0]))
+				
+dumpFile = getScriptPath() + '\\' + sys.argv[1]
+outFile = getScriptPath() + '\\' + sys.argv[2]
+
+curPop = np.loadtxt(dumpFile)
 #dummy with extra column
 output = np.zeros((curPop.shape[0], curPop.shape[1]+1))
 #dummy function
@@ -19,5 +25,5 @@ res = res[None].T
 output[:,:-1] = curPop
 output[:,-1:] = res
 
-np.savetxt(sys.argv[2], output, fmt='%10.5f', newline="\n")
+np.savetxt(outFile, output, fmt='%10.5f', newline="\n")
 #print(output)

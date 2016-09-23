@@ -23,6 +23,7 @@ params = {'POPN' : 40, 'PARENTS' : 15, 'MRATE' : 0.05, 'TOURN' : 0 }
 initFile = getScriptPath() + '\\' + sys.argv[1]
 dumpFile = getScriptPath() + '\\' + sys.argv[2]
 outFile = getScriptPath() + '\\' + sys.argv[3]
+
 # initialize algorthm
 with open(initFile, "r") as f:
 	searchlines = f.readlines()
@@ -73,7 +74,7 @@ dim = len(controls)
 
 # now read second param which is a intermidiate file
 # if file is not there or empty -> first iteration
-if not os.path.isfile(sys.argv[2]) :#or os.stat("file").st_size == 0:
+if not os.path.isfile(dumpFile) :#or os.stat("file").st_size == 0:
 	# generate POPN - population
 	# random values in every column based on given ranges
 	
@@ -121,7 +122,7 @@ else :
 		header = ['CTRL'+ str(x) + '\t' for x in range(len(controls))]	
 		header.append('OBJ\n')
 		# write to file
-		with open(outFile, "a") as f:
+		with open(outFile, "w") as f:			
 			f.writelines(header)
 			f.close()
 	# write fittest to file
